@@ -1,6 +1,6 @@
 {
   "name": "mongoose-transaction-decorator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "mongoose transaction decorator",
   "keywords": [
     "mongoose",
@@ -10,6 +10,7 @@
     "plugin",
     "mongodb",
     "transactions",
+    "transactional",
     "annotation"
   ],
   "author": "GO_DIE",

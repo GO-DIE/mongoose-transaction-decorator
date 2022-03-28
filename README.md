@@ -27,7 +27,11 @@ import {
   connection,
   Model,
 } from 'mongoose';
-import { transaction, TransactionConnection, Transactional } from 'mongoose-transaction-decorator';
+import {
+  transaction,
+  TransactionConnection,
+  Transactional,
+} from 'mongoose-transaction-decorator';
 
 interface IPerson {
   name: string;

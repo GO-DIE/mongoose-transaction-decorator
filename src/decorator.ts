@@ -5,13 +5,13 @@ import { ClientSessionOptions, MongoServerError } from 'mongodb';
 
 export const TRANSACTION_SESSION = Symbol('TRANSACTION_SESSION');
 
-export function Transactional(connectionName?: string);
-export function Transactional(options?: ClientSessionOptions);
+export function Transactional(connectionName?: string): MethodDecorator;
+export function Transactional(options?: ClientSessionOptions): MethodDecorator;
 export function Transactional(
   connectionName?: string,
   options?: ClientSessionOptions,
-);
-export function Transactional(...args: any[]) {
+): MethodDecorator;
+export function Transactional(...args: any[]): MethodDecorator {
   let connectionName = DEFAULT_NAME;
   let options: ClientSessionOptions;
 
@@ -25,11 +25,15 @@ export function Transactional(...args: any[]) {
     [connectionName, options] = args;
   }
 
-  return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
+  return (
+    target: object,
+    propertyKey: string | symbol,
+    descriptor: TypedPropertyDescriptor<any>,
+  ) => {
     const originalMethod = descriptor.value;
     const als = new ALS();
-    descriptor.value = async function (...args: any[]) {
-      return await als.run(async () => {
+    descriptor.value = function (...args: any[]) {
+      return als.run(async () => {
         const connection = new TransactionConnection().getConnection(
           connectionName,
         );

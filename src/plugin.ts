@@ -24,6 +24,8 @@ const enum middlewareTypes {
   model = 'model',
 }
 
+type MiddlewareType = `${middlewareTypes}`;
+
 // 根据mongoose所有类型中间件（已剔除事务无关中间件）的配置
 const middlewareGroups = {
   [middlewareTypes.document]: ['save', ...specials.documentAndQueryMiddlewares],
@@ -54,13 +56,15 @@ const middlewareGroups = {
  *  - 若用户无手动设置session时，自动注入事务装饰器的session；否，则不处理
  * @param next
  */
-function preCb(next: CallbackWithoutResultAndOptionalError) {
+function preCb(this: any, next: CallbackWithoutResultAndOptionalError) {
   const als = new ALS();
   const session = als.get<ClientSession>(TRANSACTION_SESSION);
   if (this instanceof Document) {
     this.$session() || this.$session(session);
-  } else if (this instanceof Query || this instanceof Aggregate) {
+  } else if (this instanceof Query) {
     this.getOptions().session || this.session(session);
+  } else if (this instanceof Aggregate) {
+    (this as any).options.session || this.session(session);
   }
   next();
 }
@@ -74,7 +78,7 @@ function preCb(next: CallbackWithoutResultAndOptionalError) {
 function overwriteMethod(schema: Schema, method: string) {
   if ([...middlewareGroups.model, ...specials.modelMethods].includes(method)) {
     const als = new ALS();
-    schema.statics[method] = function (...args: any[]) {
+    schema.statics[method] = function (...args: any) {
       const session = als.get<ClientSession>(TRANSACTION_SESSION);
       if (method !== modelDistinct) {
         // FIXME: Modle.distinct返回Query, 如果用户后续再继续手动Query.session(userSession)那么自动注入的session将被覆盖
@@ -97,7 +101,7 @@ function overwriteMethod(schema: Schema, method: string) {
  */
 export function transaction(schema: Schema) {
   for (const middlewareType in middlewareGroups) {
-    middlewareGroups[middlewareType].forEach(method => {
+    middlewareGroups[middlewareType as MiddlewareType].forEach(method => {
       if (middlewareType === middlewareTypes.model) {
         overwriteMethod(schema, method);
       } else if (
