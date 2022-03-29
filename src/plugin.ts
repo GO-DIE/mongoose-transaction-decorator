@@ -64,6 +64,7 @@ function preCb(this: any, next: CallbackWithoutResultAndOptionalError) {
   } else if (this instanceof Query) {
     this.getOptions().session || this.session(session);
   } else if (this instanceof Aggregate) {
+    // FIXME：mongoose类型声明文件不完整，持续关注https://github.com/Automattic/mongoose/issues/11594
     (this as any).options.session || this.session(session);
   }
   next();
