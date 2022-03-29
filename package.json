@@ -1,6 +1,6 @@
 {
   "name": "mongoose-transaction-decorator",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "mongoose transaction decorator",
   "keywords": [
     "mongoose",
@@ -11,13 +11,14 @@
     "mongodb",
     "transactions",
     "transactional",
-    "annotation"
+    "annotation",
+    "nodejs"
   ],
   "author": "GO_DIE",
   "private": false,
   "license": "MIT",
   "files": [
-    "build/"
+    "build"
   ],
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
@@ -27,8 +28,8 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "build": "rm -rf build & tsc",
-    "prepublish": "rm -rf build & tsc",
+    "build": "rm -rf build & tsc --project tsconfig.build.json",
+    "prepublish": "npm run build",
     "format": "prettier --write \"*.ts\" \"**/*.+(json|yaml)\"",
     "lint": "eslint \"**/*.ts\" --fix",
     "test": "sh ./scripts/build.sh & jest --coverage & sh ./scripts/clean.sh"

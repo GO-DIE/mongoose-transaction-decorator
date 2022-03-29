@@ -118,7 +118,7 @@ plugin(transaction);
 
 ## Class: TransactionConnection
 
-This Class configures and saves Mongoose connections for use by the transaction decorator.  
+This Class configures and saves Mongoose connections for use by the transaction decorator.
 
 It is a Singleton Class.
 
@@ -137,7 +137,7 @@ Name you mongoose connections.
 **Parameters：**
 
 - *connection* **\<mongoose.Connection\>**  mongoose connection
-- *connectionName*? **\<mongoose.Connection\>**   Give a name for this connection, default name "default" 
+- *connectionName*? **\<mongoose.Connection\>**   Give a name for this connection, default name "default"
 
 
 
@@ -170,11 +170,10 @@ Get mongoose connection.
 
 Decorator that marks the method as a transaction method.
 
-**note：**
-
-- Decorator normally use dependent the transaction plugin and TransactionConnection.setConnection().
-
-- Decorator do not affect custom transactions that exist within the decorator method.
+> **note：**
+>
+> - Decorator normally use dependent the transaction plugin and TransactionConnection.setConnection().
+> - Decorator do not affect custom transactions that exist within the decorator method.
 
 
 
@@ -184,7 +183,7 @@ Decorator that marks the method as a transaction method.
 
   The database connection used within the decorated method must be the same as the database connection corresponding to this connection name, otherwise a transaction exception may occur.
 
-- *options*? **\<ClientSessionOptions\>**  Optional settings for the transaction. 
+- *options*? **\<ClientSessionOptions\>**  Optional settings for the transaction.
 
 
 
@@ -201,3 +200,6 @@ class Person {
 }
 ```
 
+## License
+
+[MIT license](https://github.com/GO-DIE/mongoose-transaction-decorator/blob/main/LICENSE).
