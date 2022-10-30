@@ -9,8 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "mongoose": "^6.2.8",
-    "mongoose-transaction-decorator": "^0.0.3"
+    "mongoose": "^6.7.0",
+    "mongoose-transaction-decorator": "^1.0.1"
   },
   "devDependencies": {
     "ts-node": "^10.7.0",
