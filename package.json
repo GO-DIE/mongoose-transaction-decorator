@@ -35,8 +35,8 @@
     "test": "sh ./scripts/build.sh & jest --coverage & sh ./scripts/clean.sh"
   },
   "dependencies": {
-    "mongodb": "^4.3.1",
-    "mongoose": "^6.2.8"
+    "mongodb": "^4.11.0",
+    "mongoose": "^6.7.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.1",
